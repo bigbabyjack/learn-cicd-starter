@@ -27,7 +27,7 @@ jobs:
           credentials_json: ${{ secrets.GCP_CREDENTIALS }}
 
       - name: Set up Cloud SDK
-        uses: google-github-actions/setup-gcloud@v2
+        uses: google-github-actions/setup-gcloud@v1
 
       - name: Deploy
         run: gcloud builds submit --tag us-central1-docker.pkg.dev/notely-426716/notely-ar-repo/learn-cicd-starter:latest .
