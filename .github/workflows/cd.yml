@@ -21,3 +21,15 @@ jobs:
       - name: Build
         run: scripts/buildprod.sh
 
+
+      - name: Set up Cloud SDK
+        uses: google-github-actions/setup-gcloud@v0
+        with:
+          service_account_key: ${{ secrets.GCP_SA_KEY }}
+          project_id: ${{ secrets.GCP_PROJECT_ID }}
+
+      - name: Deploy
+        run: gcloud builds submit --tag us-central1-docker.pkg.dev/notely-426716/notely-ar-repo/learn-cicd-starter:latest .
+
+      - name: Deploy to Cloud Run
+        run: gcloud run deploy notely --image us-central1-docker.pkg.dev/notely-426716/notely-ar-repo/learn-cicd-starter:latest --region us-central1 --allow-unauthenticated --project notely-426716 --max-instances=4
